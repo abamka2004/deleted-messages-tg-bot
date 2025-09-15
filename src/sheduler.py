@@ -40,16 +40,16 @@ class SchedulerManager:
         try:
             async with async_session() as session:
                 # Вычисляем дату, старше которой сообщения будут удаляться
-                month_ago = datetime.now(pytz.timezone("Europe/Moscow")) - relativedelta(days=7)
+                time_ago = datetime.now(pytz.timezone("Europe/Moscow")) - relativedelta(days=7)
 
                 # Создаем запрос на удаление
                 result = await session.execute(
-                    delete(MessageLog).where(MessageLog.timestamp < month_ago)
+                    delete(MessageLog).where(MessageLog.timestamp < time_ago)
                 )
 
                 await session.commit()
 
-                logger.info(f"Deleted {result.rowcount} messages older than {month_ago}")
+                logger.info(f"Deleted {result.rowcount} messages older than {time_ago}")
 
         except Exception as e:
             logger.error(f"Error during database cleanup: {e}")
