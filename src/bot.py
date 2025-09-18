@@ -76,7 +76,7 @@ async def handle_edited_business_message(message: types.Message):
                     text=f"✏️ Сообщение отредактировано:\n\n"
                          f"Original: <blockquote>{log_entry.original_text}</blockquote>\n\n"
                          f"Edited: <blockquote>{message.text}</blockquote>",
-                    reply_markup=get_event_markup(message.from_user.id)
+                    reply_markup=get_event_markup(message.from_user.id), parse_mode="HTML"
                 )
                 logger.info(f"Edit notification sent for message {message.message_id}")
             else:
